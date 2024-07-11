@@ -17,7 +17,6 @@ public class Product {
     private String img1;
     private String img2;
     private String img3;
-
     private String img4;
 
     public Product() {

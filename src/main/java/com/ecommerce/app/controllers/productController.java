@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/v1/Products")
+@RequestMapping(path = "/api/v1/products")
 public class productController {
     private final ProductRepository repository;
 
