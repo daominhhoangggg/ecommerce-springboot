@@ -3,7 +3,9 @@ package com.ecommerce.app.controllers;
 import com.ecommerce.app.models.Product;
 import com.ecommerce.app.models.ResponseObject;
 import com.ecommerce.app.repositories.ProductRepository;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +17,6 @@ import java.util.Optional;
 @RequestMapping(path = "/api/v1/products")
 public class productController {
     private final ProductRepository repository;
-
     public productController(ProductRepository repository) {
         this.repository = repository;
     }
@@ -49,4 +50,12 @@ public class productController {
                         new ResponseObject("failed", "Cannot find product with id = " + id, "")
                 );
     }
+    @GetMapping("/pagination")
+    ResponseEntity<ResponseObject> getPagination(@RequestParam("search") String search, @RequestParam("page") int page, @RequestParam("count") int count) {
+        Pageable pageable = PageRequest.of(page - 1, count);
+        Page<Product> foundProducts = repository.searchProducts(search, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Search successfully", foundProducts.getContent())
+            );
+        }
 }
