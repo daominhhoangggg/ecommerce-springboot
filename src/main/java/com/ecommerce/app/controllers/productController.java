@@ -17,13 +17,12 @@ import java.util.Optional;
 @RequestMapping(path = "/api/v1/products")
 public class productController {
     private final ProductRepository repository;
+    public final ProductService productService;
 
-    public productController(ProductRepository repository) {
+    public productController(ProductRepository repository, ProductService productService) {
         this.repository = repository;
+        this.productService = productService;
     }
-
-    @Autowired
-    public ProductService productService;
 
     @GetMapping("")
     List<Product> getAllProducts() {
@@ -31,15 +30,10 @@ public class productController {
     }
 
     @GetMapping("/category")
-    ResponseEntity<ResponseObject> getCategory(@RequestParam("category") String category) {
-        List<Product> foundProducts;
-        if("all".equalsIgnoreCase(category)) {
-            foundProducts = repository.findAllProducts();
-        } else {
-            foundProducts = repository.findProductsByCategory(category);
-        }
+    ResponseEntity<ResponseObject> getCategory() {
+        List<String> listCategory = repository.findAllCategory();
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Query by category successfully", foundProducts)
+                new ResponseObject("ok", "Query by category successfully", listCategory)
         );
     }
 
@@ -56,15 +50,13 @@ public class productController {
     }
 
     @GetMapping("/pagination")
-    ResponseEntity<ResponseObject> getPagination(@RequestParam("search") String search,
+    ResponseEntity<ResponseObject> getPagination(@RequestParam(value = "search", required = false) String search,
                                                  @RequestParam("page") int page,
                                                  @RequestParam("count") int count,
                                                  @RequestParam("category") String category) {
-        Page<Product> result = productService.search(page, count);
+        if(category.equalsIgnoreCase("all")) category = null;
+        Page<Product> result = productService.search(search ,page, count, category);
         List<Product> foundProducts = result.getContent();
-
-        Long totalItems = result.getTotalElements();
-        int totalPages = result.getTotalPages();
 
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("ok", "Search product successfully", foundProducts)

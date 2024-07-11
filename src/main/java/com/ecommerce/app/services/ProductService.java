@@ -14,9 +14,9 @@ public class ProductService implements IProduct{
     ProductRepository repository;
 
     @Override
-    public Page<Product> search(int page, int count) {
+    public Page<Product> search(String search, int page, int count, String category) {
         Pageable pageable = PageRequest.of(page-1, count);
-        return repository.findAll(pageable);
+        return repository.searchProducts(search, pageable, category);
     }
 
     @Override
