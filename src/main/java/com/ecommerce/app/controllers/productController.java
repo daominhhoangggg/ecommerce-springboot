@@ -2,11 +2,13 @@ package com.ecommerce.app.controllers;
 
 import com.ecommerce.app.models.Product;
 import com.ecommerce.app.models.ResponseObject;
-import com.ecommerce.app.repositories.ProductRepository;
 import com.ecommerce.app.services.ProductService;
+import com.ecommerce.app.services.ProductServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,22 +17,17 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/v1/products")
 public class productController {
-    private final ProductRepository repository;
-    public final ProductService productService;
-
-    public productController(ProductRepository repository, ProductService productService) {
-        this.repository = repository;
-        this.productService = productService;
-    }
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("")
     List<Product> getAllProducts() {
-        return repository.findAll();
+        return productService.getAllProducts();
     }
 
     @GetMapping("/category")
     ResponseEntity<ResponseObject> getCategory() {
-        List<String> listCategory = repository.findAllCategory();
+        List<String> listCategory = productService.getAllCategory();
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("ok", "Query by category successfully", listCategory)
         );
@@ -38,8 +35,8 @@ public class productController {
 
     @GetMapping("/{id}")
     ResponseEntity<ResponseObject> getDetail(@PathVariable("id") Long id) {
-        Optional<Product> foundProduct = repository.findProductsById(id);
-        return foundProduct.isPresent() ?
+        Product foundProduct = productService.get(id);
+        return foundProduct != null ?
                 ResponseEntity.status(HttpStatus.OK).body(
                         new ResponseObject("ok", "Query product successfully", foundProduct)
                 ) :

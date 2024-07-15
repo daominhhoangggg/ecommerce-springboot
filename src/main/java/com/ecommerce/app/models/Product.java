@@ -19,8 +19,7 @@ public class Product {
     private String img3;
     private String img4;
 
-    public Product() {
-    }
+    public Product() {}
 
     public Product(String name, Double price, String category, String long_desc, String short_desc, String img1, String img2, String img3, String img4) {
         this.name = name;
