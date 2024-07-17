@@ -1,7 +1,8 @@
-package com.ecommerce.app.services;
+package com.ecommerce.app.services.impl;
 
 import com.ecommerce.app.models.Product;
 import com.ecommerce.app.repositories.ProductRepository;
+import com.ecommerce.app.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

@@ -3,16 +3,13 @@ package com.ecommerce.app.controllers;
 import com.ecommerce.app.models.Product;
 import com.ecommerce.app.models.ResponseObject;
 import com.ecommerce.app.services.ProductService;
-import com.ecommerce.app.services.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/v1/products")
