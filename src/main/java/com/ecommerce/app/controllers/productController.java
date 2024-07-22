@@ -19,7 +19,7 @@ public class productController {
 
     @GetMapping("")
     List<Product> getAllProducts() {
-        return productService.getAllProducts(1, 8);
+        return productService.getAllProducts();
     }
 
     @GetMapping("/category")

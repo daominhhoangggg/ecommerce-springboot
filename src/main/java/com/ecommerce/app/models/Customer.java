@@ -1,10 +1,12 @@
 package com.ecommerce.app.models;
 
+import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -16,8 +18,8 @@ public class Customer {
     private String email;
     private String password;
     private String phone;
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
-    private Cart cart;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<CartItem> cartItems;
 
     public Customer() {}
 
@@ -27,7 +29,6 @@ public class Customer {
         this.email = email;
         this.password = password;
         this.phone = phone;
-        this.cart = new Cart(this);
     }
 
     public Long getId() {
@@ -68,5 +69,13 @@ public class Customer {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
 }
