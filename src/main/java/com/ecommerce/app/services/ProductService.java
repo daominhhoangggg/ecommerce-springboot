@@ -9,7 +9,5 @@ public interface ProductService {
  List<Product> getAllProducts();
  List<String> getAllCategory();
  Page<Product> search(String search ,int page, int count, String category);
- void save(Product product);
- Product get(Long id);
- void delete(Long id);
+ Product findProductById(Long id);
 }

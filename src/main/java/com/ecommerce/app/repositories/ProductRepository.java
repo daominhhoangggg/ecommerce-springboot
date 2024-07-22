@@ -15,8 +15,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<String> findAllCategory();
 
     @Query("FROM Product WHERE id = :id")
-    Optional<Product> findProductsById(@Param("id") Long id);
+    Optional<Product> findProductById(@Param("id") Long id);
 
-    @Query("FROM Product WHERE (:search IS NULL OR (name ILIKE %:search% OR long_desc ILIKE %:search% OR short_desc ILIKE %:search%)) AND (:category IS NULL OR category = :category)")
-    Page<Product> searchProducts(@Param("search") String search, Pageable pageable, String category);
+    @Query("FROM Product " +
+        "WHERE (:search IS NULL OR (name ILIKE %:search% OR long_desc ILIKE %:search% OR short_desc ILIKE %:search%)) " +
+        "AND (:category IS NULL OR category = :category)")
+    List<Product> searchProducts(@Param("search") String search,@Param("category") String category);
 }

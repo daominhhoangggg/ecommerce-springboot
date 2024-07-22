@@ -1,8 +1,6 @@
 package com.ecommerce.app.controllers;
 
-import com.ecommerce.app.dto.CustomerCartDTO;
 import com.ecommerce.app.models.Customer;
-import com.ecommerce.app.services.CartService;
 import com.ecommerce.app.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

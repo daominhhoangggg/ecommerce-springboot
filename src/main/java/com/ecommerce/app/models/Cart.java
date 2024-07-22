@@ -1,28 +1,34 @@
 package com.ecommerce.app.models;
 
+import java.util.ArrayList;
+import java.util.List;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long productId;
-    private Long customerId;
-    private Integer quantity;
+
+    @OneToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    private List<CartItem> cartItems = new ArrayList<>();
 
     public Cart() {}
 
-    public Cart(Long id, Long productId, Long customerId, int quantity) {
-        this.id = id;
-        this.productId = productId;
-        this.customerId = customerId;
-        this.quantity = quantity;
+    public Cart(Customer customer) {
+        this.customer = customer;
     }
-
     public Long getId() {
         return id;
     }
@@ -31,27 +37,19 @@ public class Cart {
         this.id = id;
     }
 
-    public Long getProductId() {
-        return productId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public List<CartItem> getCartItems() {
+        return cartItems;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
 }

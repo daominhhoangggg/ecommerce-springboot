@@ -1,5 +1,7 @@
 package com.ecommerce.app.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,10 +20,14 @@ public class Product {
     private String img2;
     private String img3;
     private String img4;
-
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<CartItem> cartItems = new ArrayList<>();
     public Product() {}
 
-    public Product(String name, Double price, String category, String long_desc, String short_desc, String img1, String img2, String img3, String img4) {
+    public Product(Long id, String name, Double price, String category, String long_desc, String short_desc, String img1, String img2,
+        String img3,
+        String img4) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
@@ -113,19 +119,28 @@ public class Product {
         this.img4 = img4;
     }
 
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", category='" + category + '\'' +
-                ", long_desc='" + long_desc + '\'' +
-                ", short_desc='" + short_desc + '\'' +
-                ", img1='" + img1 + '\'' +
-                ", img2='" + img2 + '\'' +
-                ", img3='" + img3 + '\'' +
-                ", img4='" + img4 + '\'' +
-                '}';
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", price=" + price +
+            ", category='" + category + '\'' +
+            ", long_desc='" + long_desc + '\'' +
+            ", short_desc='" + short_desc + '\'' +
+            ", img1='" + img1 + '\'' +
+            ", img2='" + img2 + '\'' +
+            ", img3='" + img3 + '\'' +
+            ", img4='" + img4 + '\'' +
+            ", cartItems=" + cartItems +
+            '}';
     }
 }

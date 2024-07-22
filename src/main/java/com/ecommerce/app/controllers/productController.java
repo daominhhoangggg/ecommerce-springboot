@@ -19,7 +19,7 @@ public class productController {
 
     @GetMapping("")
     List<Product> getAllProducts() {
-        return productService.getAllProducts();
+        return productService.getAllProducts(1, 8);
     }
 
     @GetMapping("/category")
@@ -32,7 +32,7 @@ public class productController {
 
     @GetMapping("/{id}")
     ResponseEntity<ResponseObject> getDetail(@PathVariable("id") Long id) {
-        Product foundProduct = productService.get(id);
+        Product foundProduct = productService.findProductById(id);
         return foundProduct != null ?
                 ResponseEntity.status(HttpStatus.OK).body(
                         new ResponseObject("ok", "Query product successfully", foundProduct)
@@ -43,16 +43,17 @@ public class productController {
     }
 
     @GetMapping("/pagination")
-    ResponseEntity<ResponseObject> getPagination(@RequestParam(value = "search", required = false) String search,
+    List<Product> getPagination(@RequestParam(value = "search", required = false) String search,
                                                  @RequestParam("page") int page,
                                                  @RequestParam("count") int count,
                                                  @RequestParam("category") String category) {
-        if(category.equalsIgnoreCase("all")) category = null;
-        Page<Product> result = productService.search(search ,page, count, category);
-        List<Product> foundProducts = result.getContent();
+        Page<Product> result;
+        if(category.equalsIgnoreCase("all")) {
+            result = productService.search(search ,page, count, null);
+        } else {
+            result = productService.search(search ,page, count, category);
+        }
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Search product successfully", foundProducts)
-        );
+        return result.getContent();
     }
 }
