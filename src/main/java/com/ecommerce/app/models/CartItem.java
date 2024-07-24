@@ -1,5 +1,6 @@
 package com.ecommerce.app.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +21,7 @@ public class CartItem {
     private Product product;
     private Integer quantity;
     public CartItem() {}
-    public CartItem(Customer customer, Product product, int quantity) {
+    public CartItem(Customer customer, Product product, Integer quantity) {
         this.customer = customer;
         this.product = product;
         this.quantity = quantity;
@@ -43,10 +44,10 @@ public class CartItem {
     public void setProduct(Product product) {
         this.product = product;
     }
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 }

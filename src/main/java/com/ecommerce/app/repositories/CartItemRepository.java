@@ -9,4 +9,7 @@ import com.ecommerce.app.models.CartItem;
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     @Query("FROM CartItem WHERE customer.id = :id")
     List<CartItem> getCartItemsByCustomerId(@Param("id") Long id);
+
+    @Query("FROM CartItem WHERE customer.id = :customerId AND product.id = :productId")
+    CartItem findByCustomerIdAndProductId(@Param("customerId") Long customerId, @Param("productId") Long productId);
 }

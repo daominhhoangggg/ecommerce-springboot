@@ -1,6 +1,5 @@
 package com.ecommerce.app.services.impl;
 
-import com.ecommerce.app.dto.CustomerCartDTO;
 import com.ecommerce.app.models.Customer;
 import com.ecommerce.app.repositories.CustomerRepository;
 import com.ecommerce.app.services.CustomerService;
@@ -8,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {

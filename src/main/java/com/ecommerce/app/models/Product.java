@@ -2,6 +2,7 @@ package com.ecommerce.app.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -21,6 +22,7 @@ public class Product {
     private String img3;
     private String img4;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<CartItem> cartItems = new ArrayList<>();
     public Product() {}
 
